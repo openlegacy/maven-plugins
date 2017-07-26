@@ -123,7 +123,7 @@ public final class DependencyUtil
         
         if ( prependGroupId )
         {
-            destFileName.append( artifact.getGroupId() ).append( "." );
+            destFileName.append( artifact.getGroupId() ).append( ":" );
         }
         
         String versionString;
@@ -131,11 +131,11 @@ public final class DependencyUtil
         {
             if ( useBaseVersion )
             {
-                versionString = "-" + ArtifactUtils.toSnapshotVersion( artifact.getVersion() );
+                versionString = ":" + ArtifactUtils.toSnapshotVersion( artifact.getVersion() );
             }
             else
             {
-                versionString = "-" + artifact.getVersion();
+                versionString = ":" + artifact.getVersion();
             }
         }
         else
@@ -147,12 +147,13 @@ public final class DependencyUtil
 
         if ( !removeClassifier && StringUtils.isNotEmpty( artifact.getClassifier() ) )
         {
-            classifierString = "-" + artifact.getClassifier();
+            classifierString = ":" + artifact.getClassifier();
         }
-        destFileName.append( artifact.getArtifactId() ).append( versionString );
-        destFileName.append( classifierString ).append( "." );
+        destFileName.append( artifact.getArtifactId() ).append( ":" );
         destFileName.append( artifact.getArtifactHandler().getExtension() );
-        
+        destFileName.append( versionString );
+        destFileName.append( classifierString );
+
         return destFileName.toString();
     }
     
